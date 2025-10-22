@@ -83,7 +83,7 @@
 
     <div class="btn-group">
       <button onclick="location.href='會員註冊.html'" class="secondary-btn">📝 前往註冊</button>
-      <button onclick="location.href='index.html'" class="secondary-btn">🏠 回到主頁</button>
+      <button onclick="location.href='../.餐廳首頁.php'" class="secondary-btn">🏠 回到主頁</button>
     </div>
 
     <div class="note">
@@ -106,7 +106,7 @@
       if (user) {
         localStorage.setItem("currentUser", JSON.stringify(user)); // 記錄登入者
         alert("登入成功！");
-        window.location.href = "index.html";
+        window.location.href = "../.餐廳首頁.php";
       } else {
         errorDiv.textContent = "帳號或密碼錯誤，請重新輸入。";
       }
