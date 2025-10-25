@@ -6,10 +6,9 @@ $name = $_SESSION['name'] ?? null;
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>一畝田園生活美食</title>
-    <style>
+<meta charset="UTF-8">
+<title>一畝田園生活美食</title>
+<style>
         body {
             font-family: "微軟正黑體", Arial, sans-serif;
             margin: 0; padding: 0;
