@@ -1,4 +1,4 @@
-<!DOCTYPE html>  //使用者資訊
+<!DOCTYPE html>  //會員專區顯示，顯示使用者資訊
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />

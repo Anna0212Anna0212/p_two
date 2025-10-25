@@ -1,4 +1,4 @@
-<!DOCTYPE html>  //會員登入介面
+<!DOCTYPE html> <!-- 會員登入介面 -->
 <html lang="zh-Hant">
 <head>
   <meta charset="UTF-8" />
@@ -91,26 +91,26 @@
     </div>
   </div>
 
-  <script>
-    document.getElementById("loginForm").addEventListener("submit", function(e) {
-      e.preventDefault();
-      const username = document.getElementById("username").value;
-      const password = document.getElementById("password").value;
-      const errorDiv = document.getElementById("error");
+<script>
+  document.getElementById("loginForm").addEventListener("submit", function(e) {
+    e.preventDefault();
+    const username = document.getElementById("username").value.trim();
+    const password = document.getElementById("password").value.trim();
 
-      const users = JSON.parse(localStorage.getItem("users")) || [];
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.username === username && u.password === password);
 
-      // 查找是否有該帳號
-      const user = users.find(u => u.username === username && u.password === password);
+    if (user) {
+      // 🔹 登入成功時，把該使用者資料存成 currentUser
+      localStorage.setItem("currentUser", JSON.stringify(user));
 
-      if (user) {
-        localStorage.setItem("currentUser", JSON.stringify(user)); // 記錄登入者
-        alert("登入成功！");
-        window.location.href = "../index.php";
-      } else {
-        errorDiv.textContent = "帳號或密碼錯誤，請重新輸入。";
-      }
-    });
-  </script>
+      alert("登入成功！");
+      window.location.href = "member_home.php"; // 登入後跳轉會員頁
+    } else {
+      alert("帳號或密碼錯誤！");
+    }
+  });
+</script>
+
 </body>
 </html>
