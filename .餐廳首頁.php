@@ -1,14 +1,10 @@
-<?php
-session_start();
-$name = $_SESSION['name'] ?? null;
-?>
-
 <!DOCTYPE html>
 <html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>一畝田園生活美食</title>
-<style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>一畝田園生活美食</title>
+    <style>
         body {
             font-family: "微軟正黑體", Arial, sans-serif;
             margin: 0; padding: 0;
@@ -40,26 +36,19 @@ $name = $_SESSION['name'] ?? null;
             border-radius: 5px;
             transition: background-color 0.3s;
         }
-        nav a:hover {
-            background-color: #7a9e7e;
-        }
+        nav a:hover { background-color: #7a9e7e; }
         main {
             max-width: 960px;
             margin: 2rem auto;
             padding: 0 1rem;
         }
-        section {
-            margin-bottom: 3rem;
-        }
+        section { margin-bottom: 3rem; }
         h2 {
             border-bottom: 2px solid #7a9e7e;
             padding-bottom: 0.5rem;
             margin-bottom: 1rem;
         }
-        .intro {
-            font-size: 1.2rem;
-            line-height: 1.6;
-        }
+        .intro { font-size: 1.2rem; line-height: 1.6; }
         .features {
             display: flex;
             flex-wrap: wrap;
@@ -79,13 +68,8 @@ $name = $_SESSION['name'] ?? null;
             border-radius: 6px;
             margin-bottom: 0.8rem;
         }
-        .feature-item h3 {
-            margin-bottom: 0.5rem;
-            color: #557a55;
-        }
-        #contact-info div {
-            margin-bottom: 1rem;
-        }
+        .feature-item h3 { margin-bottom: 0.5rem; color: #557a55; }
+        #contact-info div { margin-bottom: 1rem; }
         footer {
             background-color: #7a9e7e;
             color: white;
@@ -94,17 +78,9 @@ $name = $_SESSION['name'] ?? null;
             font-size: 0.9rem;
         }
         @media (max-width: 600px) {
-            .features {
-                flex-direction: column;
-                align-items: center;
-            }
-            nav {
-                flex-direction: column;
-                gap: 1rem;
-            }
+            .features { flex-direction: column; align-items: center; }
+            nav { flex-direction: column; gap: 1rem; }
         }
-
-        /* 會員歡迎顯示 */
         .user-welcome {
             position: absolute;
             right: 1rem;
@@ -123,57 +99,44 @@ $name = $_SESSION['name'] ?? null;
 <body>
     <header>
         一畝田園生活美食
-        <?php if ($name): ?>
-            <div class="user-welcome">
-                歡迎，<?= htmlspecialchars($name) ?> | 
-                <a href="member_home.php">會員專區</a> | 
-                <a href="logout.php">登出</a>
-            </div>
-        <?php else: ?>
-            <div class="user-welcome">
-                <a href="會員登入介面.html">會員登入</a> | 
-                <a href="會員註冊.html">註冊</a>
-            </div>
-        <?php endif; ?>
+        <div id="userArea" class="user-welcome"></div>
     </header>
 
     <!-- 醒目的線上訂位按鈕 + 會員登入按鈕 -->
     <div style="text-align:center; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
-      <a href="線上訂位.html" 
-         style="
-           display: inline-block;
-           background-color: #557a55;
-           color: white;
-           padding: 0.75rem 2rem;
-           font-size: 1.2rem;
-           border-radius: 8px;
-           font-weight: bold;
-           text-decoration: none;
-           box-shadow: 0 4px 8px rgba(85, 122, 85, 0.4);
-           transition: background-color 0.3s;
-         "
-         onmouseover="this.style.backgroundColor='#3f5b39'"
-         onmouseout="this.style.backgroundColor='#557a55'"
-      >立即線上訂位</a>
+        <a href="線上訂位.html"
+           style="
+             display: inline-block;
+             background-color: #557a55;
+             color: white;
+             padding: 0.75rem 2rem;
+             font-size: 1.2rem;
+             border-radius: 8px;
+             font-weight: bold;
+             text-decoration: none;
+             box-shadow: 0 4px 8px rgba(85, 122, 85, 0.4);
+             transition: background-color 0.3s;
+           "
+           onmouseover="this.style.backgroundColor='#3f5b39'"
+           onmouseout="this.style.backgroundColor='#557a55'"
+        >立即線上訂位</a>
 
-      <?php if (!$name): ?>
-      <a href="會員登入介面.html"
-         style="
-           display: inline-block;
-           background-color: #3498db;
-           color: white;
-           padding: 0.75rem 2rem;
-           font-size: 1.2rem;
-           border-radius: 8px;
-           font-weight: bold;
-           text-decoration: none;
-           box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
-           transition: background-color 0.3s;
-         "
-         onmouseover="this.style.backgroundColor='#217dbb'"
-         onmouseout="this.style.backgroundColor='#3498db'"
-      >會員登入</a>
-      <?php endif; ?>
+        <a id="loginBtn" href="會員登入介面.html"
+           style="
+             display: inline-block;
+             background-color: #3498db;
+             color: white;
+             padding: 0.75rem 2rem;
+             font-size: 1.2rem;
+             border-radius: 8px;
+             font-weight: bold;
+             text-decoration: none;
+             box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+             transition: background-color 0.3s;
+           "
+           onmouseover="this.style.backgroundColor='#217dbb'"
+           onmouseout="this.style.backgroundColor='#3498db'"
+        >會員登入</a>
     </div>
 
     <nav>
@@ -182,6 +145,7 @@ $name = $_SESSION['name'] ?? null;
         <a href="#contact-info">聯絡資訊</a>
         <a href="#map">地圖位置</a>
     </nav>
+
     <main>
         <section id="intro">
             <h2>關於我們</h2>
@@ -226,20 +190,49 @@ $name = $_SESSION['name'] ?? null;
                 <p>06-2872230</p>
             </div>
         </section>
+
         <section id="map">
             <h2>地圖位置</h2>
             <iframe 
-                src="https://www.google.com/maps?q=台南市安南區佃西一街38號&output=embed" 
-                width="100%" 
-                height="300" 
-                style="border:0; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);" 
-                allowfullscreen 
+                src="https://www.google.com/maps?q=台南市安南區佃西一街38號&output=embed"
+                width="100%"
+                height="300"
+                style="border:0; border-radius: 8px; box-shadow: 0 0 10px rgba(0,0,0,0.1);"
+                allowfullscreen
                 loading="lazy">
             </iframe>
         </section>
     </main>
+
     <footer>
         &copy; 2025 一畝田園生活美食．版權所有
     </footer>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const userArea = document.getElementById("userArea");
+            const loginBtn = document.getElementById("loginBtn");
+            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+
+            if (currentUser) {
+                userArea.innerHTML = `
+                    歡迎，${currentUser.username} |
+                    <a href="member_home.php">會員專區</a> |
+                    <a href="#" id="logoutBtn">登出</a>
+                `;
+                if (loginBtn) loginBtn.style.display = "none";
+
+                document.getElementById("logoutBtn").addEventListener("click", () => {
+                    localStorage.removeItem("currentUser");
+                    location.reload();
+                });
+            } else {
+                userArea.innerHTML = `
+                    <a href="會員登入介面.html">會員登入</a> |
+                    <a href="會員註冊.html">註冊</a>
+                `;
+            }
+        });
+    </script>
 </body>
 </html>
