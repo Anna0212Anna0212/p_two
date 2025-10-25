@@ -1,4 +1,4 @@
-<!DOCTYPE html> //.餐廳首頁
+<!DOCTYPE html> <!-- .餐廳首頁 -->
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
@@ -139,6 +139,25 @@
         >會員登入</a>
     </div>
 
+    <div style="position:absolute; top:10px; left:10px;">
+        <a href="adminLogin.html"
+           style="
+             display: inline-block;
+             background-color: #557a55;
+             color: white;
+             padding: 0.75rem 2rem;
+             font-size: 1.2rem;
+             border-radius: 8px;
+             font-weight: bold;
+             text-decoration: none;
+             box-shadow: 0 4px 8px rgba(85, 122, 85, 0.4);
+             transition: background-color 0.3s;
+           "
+           onmouseover="this.style.backgroundColor='#3f5b39'"
+           onmouseout="this.style.backgroundColor='#557a55'"
+        >管理區</a>
+    </div>
+
     <nav>
         <a href="#intro">關於我們</a>
         <a href="#features">特色餐點</a>
@@ -158,17 +177,17 @@
             <h2>特色餐點</h2>
             <div class="features">
                 <div class="feature-item">
-                    <img src="images/a3.jpg" alt="一畝田套餐" />
+                    <img src="a3.jpg" alt="一畝田套餐" />
                     <h3>一畝田套餐</h3>
                     <p>多樣季節蔬菜與當地食材，健康又美味，適合家庭共享。</p>
                 </div>
                 <div class="feature-item">
-                    <img src="images/a2.jpg" alt="宮保蝦仁" />
+                    <img src="a2.jpg" alt="宮保蝦仁" />
                     <h3>宮保蝦仁</h3>
                     <p>香辣帶勁的宮保醬汁，搭配彈牙鮮蝦，酸甜微辣，開胃下飯。</p>
                 </div>
                 <div class="feature-item">
-                    <img src="images/a1.jpg" alt="三杯雞套餐" />
+                    <img src="a1.jpg" alt="三杯雞套餐" />
                     <h3>三杯雞套餐</h3>
                     <p>香氣四溢，醬汁濃郁，是招牌下飯佳餚。</p>
                 </div>
@@ -209,30 +228,31 @@
     </footer>
 
     <script>
-        document.addEventListener("DOMContentLoaded", () => {
-            const userArea = document.getElementById("userArea");
-            const loginBtn = document.getElementById("loginBtn");
-            const currentUser = JSON.parse(localStorage.getItem("currentUser"));
+document.addEventListener("DOMContentLoaded", () => {
+    const userArea = document.getElementById("userArea");
+    const loginBtn = document.getElementById("loginBtn");
+    const currentUser = JSON.parse(localStorage.getItem("currentUser"));
 
-            if (currentUser) {
-                userArea.innerHTML = `
-                    歡迎，${currentUser.username} |
-                    <a href="member_home.php">會員專區</a> |
-                    <a href="#" id="logoutBtn">登出</a>
-                `;
-                if (loginBtn) loginBtn.style.display = "none";
+    if (currentUser) {
+        userArea.innerHTML = `
+            歡迎，${currentUser.username} |
+            <a href="member_home.php">會員專區</a> |
+            <a href="#" id="logoutBtn">登出</a>
+        `;
+        if (loginBtn) loginBtn.style.display = "none";
 
-                document.getElementById("logoutBtn").addEventListener("click", () => {
-                    localStorage.removeItem("currentUser");
-                    location.reload();
-                });
-            } else {
-                userArea.innerHTML = `
-                    <a href="login.html">會員登入</a> |
-                    <a href="register.html">註冊</a>
-                `;
-            }
+        // ✅ 登出動作
+        document.getElementById("logoutBtn").addEventListener("click", () => {
+            localStorage.removeItem("currentUser"); // 清除登入者資料
+            window.location.href = "logout.html";   // ✅ 轉跳登出畫面
         });
-    </script>
+    } else {
+        userArea.innerHTML = `
+            <a href="login.html">會員登入</a> |
+            <a href="register.html">註冊</a>
+        `;
+    }
+});
+</script>
 </body>
 </html>

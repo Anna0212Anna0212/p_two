@@ -1,1 +1,56 @@
-<!-- 訂位完的感謝介面 -->
+ <!DOCTYPE html> <!-- 訂位完的感謝介面 -->
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8">
+  <title>訂位完成</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", sans-serif;
+      background: linear-gradient(135deg, #a1c4fd, #c2e9fb);
+      height: 100vh;
+      margin: 0;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .box {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      text-align: center;
+      width: 90%;
+      max-width: 450px;
+    }
+    h2 {
+      color: #1e88e5;
+      margin-bottom: 1rem;
+    }
+    p {
+      font-size: 1.05rem;
+      color: #555;
+      margin-bottom: 2rem;
+    }
+    button {
+      background-color: #1e88e5;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      padding: 0.6rem 1.5rem;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+    button:hover {
+      background-color: #1565c0;
+    }
+  </style>
+</head>
+<body>
+  <div class="box">
+    <h2>訂位成功！</h2>
+    <p>感謝您的訂位，我們期待為您服務。</p>
+    <button onclick="location.href='../.餐廳首頁.php'">回到首頁</button>
+  </div>
+</body>
+</html>

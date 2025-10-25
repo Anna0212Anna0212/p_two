@@ -16,11 +16,11 @@
             </div>
             <div class="mb-3">
                 <label class="form-label">電話：</label>
-                <input type="text" id="phone" class="form-control" required>
+                <input type="text" id="phone" class="form-control" placeholder="例如: 0912345678" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">Email：</label>
-                <input type="email" id="email" class="form-control" required>
+                <input type="email" id="email" class="form-control" placeholder="例如: example@mail.com" required>
             </div>
             <div class="mb-3">
                 <label class="form-label">日期：</label>
@@ -58,11 +58,28 @@
 document.getElementById("reserveForm").addEventListener("submit", function (e) {
     e.preventDefault();
 
-    // 明確抓取 DOM 元素值
+    const name = document.getElementById("name").value.trim();
+    const phone = document.getElementById("phone").value.trim();
+    const email = document.getElementById("email").value.trim();
+
+    // ✅ 電話格式檢查（09開頭，共10碼）
+    const phoneRegex = /^09\d{8}$/;
+    if (!phoneRegex.test(phone)) {
+        alert("請輸入正確的手機號碼格式（例如：0912345678）");
+        return;
+    }
+
+    // ✅ Email 格式檢查
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+        alert("請輸入正確的 Email 格式（例如：example@mail.com）");
+        return;
+    }
+
     const reservation = {
-        name: document.getElementById("name").value,
-        phone: document.getElementById("phone").value.replace(/-/g, '').replace(/\s+/g, ''),
-        email: document.getElementById("email").value,
+        name,
+        phone: phone.replace(/-/g, '').replace(/\s+/g, ''),
+        email,
         date: document.getElementById("date").value,
         time: document.getElementById("time").value,
         people: document.getElementById("people").value,
@@ -78,6 +95,7 @@ document.getElementById("reserveForm").addEventListener("submit", function (e) {
 
     alert("✅ 訂位成功！");
     this.reset();
+    window.location.href = "thankyou.html"; // ✅ 訂位成功跳 thankyou.html
 });
 </script>
 </body>
