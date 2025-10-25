@@ -1,0 +1,98 @@
+<!DOCTYPE html>  //會員註冊
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>會員註冊</title>
+  <style>
+    body {
+      font-family: "微軟正黑體";
+      background: linear-gradient(to right, #ffecd2, #fcb69f);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .register-container {
+      background: white;
+      padding: 2rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 400px;
+      text-align: center;
+    }
+    h2 { color: #333; }
+    input[type="text"], input[type="password"], input[type="email"] {
+      width: 90%;
+      padding: 0.7rem;
+      margin: 0.5rem 0;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+    }
+    input[type="file"] {
+      margin: 0.8rem 0;
+    }
+    button {
+      background-color: #4CAF50;
+      color: white;
+      padding: 0.6rem 1.5rem;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1rem;
+    }
+    button:hover { background-color: #3e8e41; }
+  </style>
+</head>
+<body>
+  <div class="register-container">
+    <h2>會員註冊</h2>
+    <form id="registerForm">
+      <input type="text" id="username" placeholder="帳號" required><br />
+      <input type="password" id="password" placeholder="密碼" required><br />
+      <input type="email" id="email" placeholder="Email" required><br />
+      <label>上傳頭像：</label><br />
+      <input type="file" id="avatar" accept="image/*"><br />
+      <button type="submit">註冊</button>
+    </form>
+  </div>
+
+  <script>
+    document.getElementById("registerForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const email = document.getElementById("email").value.trim();
+      const avatarInput = document.getElementById("avatar");
+      
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // 檢查是否帳號重複
+      if (users.some(u => u.username === username)) {
+        alert("帳號已存在，請使用其他名稱！");
+        return;
+      }
+
+      const newUser = { username, password, email };
+
+      // 若有上傳頭像，轉為 Base64 存進 localStorage
+      if (avatarInput.files.length > 0) {
+        const reader = new FileReader();
+        reader.onload = function(event) {
+          newUser.avatar = event.target.result;
+          users.push(newUser);
+          localStorage.setItem("users", JSON.stringify(users));
+          alert("註冊成功！");
+          window.location.href = "login.html";
+        };
+        reader.readAsDataURL(avatarInput.files[0]);
+      } else {
+        newUser.avatar = null;
+        users.push(newUser);
+        localStorage.setItem("users", JSON.stringify(users));
+        alert("註冊成功！");
+        window.location.href = "login.html";
+      }
+    });
+  </script>
+</body>
+</html>

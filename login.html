@@ -1,0 +1,116 @@
+<!DOCTYPE html>  //會員登入介面
+<html lang="zh-Hant">
+<head>
+  <meta charset="UTF-8" />
+  <title>會員登入</title>
+  <style>
+    body {
+      font-family: "微軟正黑體", sans-serif;
+      background: linear-gradient(to right, #74ebd5, #ACB6E5);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+    .login-container {
+      background: white;
+      padding: 2.5rem 3rem;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      width: 100%;
+      max-width: 400px;
+      text-align: center;
+    }
+    h2 { margin-bottom: 1.5rem; color: #333; }
+    input[type="text"], input[type="password"] {
+      width: 90%;
+      padding: 0.75rem;
+      margin-bottom: 1rem;
+      border: 1px solid #ccc;
+      border-radius: 8px;
+      font-size: 1rem;
+    }
+    button {
+      width: auto;
+      padding: 0.5rem 1.2rem;
+      background-color: #4a90e2;
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 0.9rem;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+      margin-top: 0;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+    button:hover { background-color: #357ABD; }
+    .secondary-btn { background-color: #aaa; }
+    .secondary-btn:hover { background-color: #888; }
+    .btn-group {
+      margin-top: 1rem;
+      display: flex;
+      justify-content: center;
+      gap: 1rem;
+      flex-wrap: wrap;
+    }
+    .note {
+      margin-top: 1.5rem;
+      font-size: 0.9rem;
+      color: #666;
+    }
+    .note a { color: #357ABD; text-decoration: none; font-weight: 600; }
+    .note a:hover { text-decoration: underline; }
+    .error {
+      color: red;
+      margin-bottom: 1rem;
+      font-size: 0.95rem;
+    }
+  </style>
+</head>
+<body>
+  <div class="login-container">
+    <h2>會員登入</h2>
+    <div id="error" class="error"></div>
+
+    <form id="loginForm">
+      <input type="text" id="username" placeholder="帳號" required><br />
+      <input type="password" id="password" placeholder="密碼" required><br />
+      <button type="submit">登入</button>
+    </form>
+
+    <div class="btn-group">
+      <button onclick="location.href='register.html'" class="secondary-btn">📝 前往註冊</button>
+      <button onclick="location.href='../index.php'" class="secondary-btn">🏠 回到主頁</button>
+    </div>
+
+    <div class="note">
+      忘記密碼請 <a href="contact_admin.html">聯絡管理員</a>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById("loginForm").addEventListener("submit", function(e) {
+      e.preventDefault();
+      const username = document.getElementById("username").value;
+      const password = document.getElementById("password").value;
+      const errorDiv = document.getElementById("error");
+
+      const users = JSON.parse(localStorage.getItem("users")) || [];
+
+      // 查找是否有該帳號
+      const user = users.find(u => u.username === username && u.password === password);
+
+      if (user) {
+        localStorage.setItem("currentUser", JSON.stringify(user)); // 記錄登入者
+        alert("登入成功！");
+        window.location.href = "../index.php";
+      } else {
+        errorDiv.textContent = "帳號或密碼錯誤，請重新輸入。";
+      }
+    });
+  </script>
+</body>
+</html>

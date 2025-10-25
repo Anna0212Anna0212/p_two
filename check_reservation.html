@@ -1,0 +1,64 @@
+<!DOCTYPE html>  //訂位查詢
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8" />
+    <title>查詢我的訂位</title>
+    <style>
+        body { font-family: "微軟正黑體"; padding: 2rem; background: #f0f0f0; }
+        input { padding: 0.5rem; margin: 0.5rem 0; width: 300px; }
+        button { padding: 0.5rem 1rem; cursor: pointer; }
+        table { margin-top: 2rem; width: 100%; border-collapse: collapse; background: #fff; }
+        th, td { padding: 0.75rem; border: 1px solid #ccc; text-align: center; }
+        th { background: #6a9fb5; color: #fff; }
+    </style>
+</head>
+<body>
+    <h1>查詢我的訂位</h1>
+    <p>請輸入您的電話或 Email：</p>
+    <input type="text" id="query" placeholder="電話或 Email" />
+    <button id="searchBtn">查詢訂位</button>
+
+    <table id="resultTable" style="display: none;">
+        <thead>
+            <tr>
+                <th>姓名</th><th>電話</th><th>Email</th><th>日期</th><th>時間</th>
+                <th>人數</th><th>區域</th><th>備註</th><th>狀態</th><th>建立時間</th>
+            </tr>
+        </thead>
+        <tbody></tbody>
+    </table>
+
+    <script>
+        document.getElementById("searchBtn").addEventListener("click", () => {
+            const keyword = document.getElementById("query").value.trim();
+            if (!keyword) return alert("請輸入電話或 Email");
+
+            const reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
+            const results = reservations.filter(r =>
+                r.phone.includes(keyword) || r.email.toLowerCase().includes(keyword.toLowerCase())
+            );
+
+            const table = document.getElementById("resultTable");
+            const tbody = table.querySelector("tbody");
+            tbody.innerHTML = "";
+
+            if (results.length === 0) {
+                alert("查無訂位資料！");
+                table.style.display = "none";
+                return;
+            }
+
+            results.forEach(r => {
+                tbody.innerHTML += `
+                    <tr>
+                        <td>${r.name}</td><td>${r.phone}</td><td>${r.email}</td>
+                        <td>${r.date}</td><td>${r.time}</td><td>${r.people}</td>
+                        <td>${r.area}</td><td>${r.note}</td><td>${r.status}</td><td>${r.created_at}</td>
+                    </tr>`;
+            });
+
+            table.style.display = "table";
+        });
+    </script>
+</body>
+</html>

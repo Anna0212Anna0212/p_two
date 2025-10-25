@@ -1,0 +1,84 @@
+<!DOCTYPE html>  //線上訂位
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="UTF-8">
+<title>餐廳訂位系統</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+<div class="container mt-5">
+    <h2 class="text-center mb-4">線上訂位</h2>
+    <div class="card p-4">
+        <form id="reserveForm">
+            <div class="mb-3">
+                <label class="form-label">姓名：</label>
+                <input type="text" id="name" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">電話：</label>
+                <input type="text" id="phone" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email：</label>
+                <input type="email" id="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">日期：</label>
+                <input type="date" id="date" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">時間：</label>
+                <input type="time" id="time" class="form-control" required>
+                <p id="end-time" class="form-text text-muted mt-1"></p>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">人數：</label>
+                <input type="number" id="people" class="form-control" min="1" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">座位區：</label>
+                <select id="area" class="form-select" required>
+                    <option value="">請選擇</option>
+                    <option value="window">靠窗區</option>
+                    <option value="outdoor">戶外區</option>
+                    <option value="private">包廂</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">備註：</label>
+                <textarea id="note" class="form-control" rows="3"></textarea>
+            </div>
+            <button type="submit" class="btn btn-success w-100">送出訂位</button>
+        </form>
+        <a href="check_reservation.html" class="btn btn-outline-secondary mt-3">查詢我的訂單</a>
+    </div>
+</div>
+
+<script>
+document.getElementById("reserveForm").addEventListener("submit", function (e) {
+    e.preventDefault();
+
+    // 明確抓取 DOM 元素值
+    const reservation = {
+        name: document.getElementById("name").value,
+        phone: document.getElementById("phone").value.replace(/-/g, '').replace(/\s+/g, ''),
+        email: document.getElementById("email").value,
+        date: document.getElementById("date").value,
+        time: document.getElementById("time").value,
+        people: document.getElementById("people").value,
+        area: document.getElementById("area").value,
+        note: document.getElementById("note").value,
+        status: "已預約",
+        created_at: new Date().toLocaleString()
+    };
+
+    let reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
+    reservations.push(reservation);
+    localStorage.setItem("reservations", JSON.stringify(reservations));
+
+    alert("✅ 訂位成功！");
+    this.reset();
+});
+</script>
+</body>
+</html>

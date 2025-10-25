@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+<!DOCTYPE html> //.餐廳首頁
 <html lang="zh-Hant">
 <head>
     <meta charset="UTF-8" />
@@ -104,7 +104,7 @@
 
     <!-- 醒目的線上訂位按鈕 + 會員登入按鈕 -->
     <div style="text-align:center; margin: 1rem 0; display: flex; justify-content: center; gap: 1rem;">
-        <a href="線上訂位.html"
+        <a href="reservation_form.html"
            style="
              display: inline-block;
              background-color: #557a55;
@@ -121,7 +121,7 @@
            onmouseout="this.style.backgroundColor='#557a55'"
         >立即線上訂位</a>
 
-        <a id="loginBtn" href="會員登入介面.html"
+        <a id="loginBtn" href="login.html"
            style="
              display: inline-block;
              background-color: #3498db;
@@ -228,8 +228,8 @@
                 });
             } else {
                 userArea.innerHTML = `
-                    <a href="會員登入介面.html">會員登入</a> |
-                    <a href="會員註冊.html">註冊</a>
+                    <a href="login.html">會員登入</a> |
+                    <a href="register.html">註冊</a>
                 `;
             }
         });
