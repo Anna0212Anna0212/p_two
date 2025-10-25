@@ -61,6 +61,29 @@ document.getElementById("reserveForm").addEventListener("submit", function (e) {
     const name = document.getElementById("name").value.trim();
     const phone = document.getElementById("phone").value.trim();
     const email = document.getElementById("email").value.trim();
+    const dateStr = document.getElementById("date").value;
+    const dateObj = new Date(dateStr);
+    const day = dateObj.getDay(); // 0:日, 1:一, ..., 6:六
+
+    if (day === 1) { // 週一
+        alert("⚠️ 本餐廳週一公休，請選擇其他日期");
+        return;
+    }
+
+    const time = document.getElementById("time").value;
+    const [hour, minute] = time.split(":").map(Number);
+
+    // 營業時間判斷
+    const morningOpen = 11, morningClose = 14;
+    const eveningOpen = 17, eveningClose = 21;
+
+    const inMorning = hour >= morningOpen && (hour < morningClose || (hour === morningClose && minute === 0));
+    const inEvening = hour >= eveningOpen && (hour < eveningClose || (hour === eveningClose && minute === 0));
+
+    if (!inMorning && !inEvening) {
+        alert("⚠️ 請選擇營業時間內的訂位時段：11:00-14:00 或 17:00-21:00，週一公休");
+        return;
+    }
 
     // ✅ 電話格式檢查（09開頭，共10碼）
     const phoneRegex = /^09\d{8}$/;
@@ -75,6 +98,8 @@ document.getElementById("reserveForm").addEventListener("submit", function (e) {
         alert("請輸入正確的 Email 格式（例如：example@mail.com）");
         return;
     }
+
+    
 
     const reservation = {
         name,

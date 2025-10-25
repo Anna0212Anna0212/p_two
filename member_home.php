@@ -54,6 +54,7 @@ button { margin-top:1rem; }
         </div>
         <button type="submit" class="btn btn-primary w-100">更新資料</button>
         <button type="button" id="logoutBtn" class="btn btn-secondary w-100 mt-2">登出</button>
+        <button type="button" id="indexBtn" class="btn btn-secondary w-100 mt-2">返回頁面</button>
     </form>
 </div>
 
@@ -141,6 +142,9 @@ document.getElementById("updateForm").addEventListener("submit", function(e){
 document.getElementById("logoutBtn").addEventListener("click", function(){
     localStorage.removeItem("currentUser");
     window.location.href = "logout.html"; // 可跳到登出畫面
+});
+document.getElementById("indexBtn").addEventListener("click", function(){
+    window.location.href = "../index.php"; // 保留登入狀態返回首頁
 });
 </script>
 </body>

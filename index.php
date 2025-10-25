@@ -156,8 +156,25 @@
            onmouseover="this.style.backgroundColor='#3f5b39'"
            onmouseout="this.style.backgroundColor='#557a55'"
         >管理區</a>
+         <a href="qrcode.php"
+       style="
+         display: inline-block;
+         background-color: #3498db;
+         color: white;
+         padding: 0.75rem 2rem;
+         font-size: 1.2rem;
+         border-radius: 8px;
+         font-weight: bold;
+         text-decoration: none;
+         box-shadow: 0 4px 8px rgba(52, 152, 219, 0.4);
+         transition: background-color 0.3s;
+         margin-left: 10px;
+       "
+       onmouseover="this.style.backgroundColor='#217dbb'"
+       onmouseout="this.style.backgroundColor='#3498db'"
+    >📱 產生 QR Code</a>
     </div>
-
+    
     <nav>
         <a href="#intro">關於我們</a>
         <a href="#features">特色餐點</a>
