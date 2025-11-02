@@ -1,51 +1,44 @@
 <?php
-// qrcode_ips.php
 include_once 'phpqrcode/qrlib.php';
 
-// 取得所有本機 IP
-$ips = [];
-if (strtoupper(substr(PHP_OS, 0, 3)) === 'WIN') {
-    $output = shell_exec('ipconfig');
-    preg_match_all('/IPv4.*?: ([0-9\.]+)/', $output, $matches);
-    $ips = $matches[1];
-} else {
-    $output = shell_exec('hostname -I');
-    $ips = preg_split('/\s+/', trim($output));
-}
+// 若使用者輸入網址，則產生 QRCode
+if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_POST['url'])) {
+    $url = trim($_POST['url']);
 
-// 過濾迴圈位址
-$ips = array_filter($ips, fn($ip) => $ip && $ip !== '127.0.0.1');
+    // 暫存檔名（防止快取）
+    $filename = 'qrcode_' . time() . '.png';
+
+    // 產生 QRCode 圖片
+    QRcode::png($url, $filename, QR_ECLEVEL_L, 6);
+}
 ?>
 <!DOCTYPE html>
-<html lang="zh-Hant-TW">
+<html lang="zh-Hant">
 <head>
-<meta charset="UTF-8">
-<title>本機區域網 QR Code</title>
-<style>
-body { font-family: "微軟正黑體", sans-serif; background:#f0f0f0; text-align:center; }
-.ip-card { display:inline-block; margin:20px; padding:20px; background:#fff; border-radius:12px; box-shadow:0 0 10px rgba(0,0,0,0.1);}
-.ip-card img { margin-top:10px; width:200px; height:200px; }
-</style>
+    <meta charset="UTF-8">
+    <title>外網 QRCode 產生器</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<h1>📡 本機區域網 QR Code</h1>
+<body class="bg-light">
+<div class="container mt-5">
+    <div class="card shadow p-4">
+        <h3 class="text-center mb-3">🌐 外網 QR Code 產生器</h3>
+        <form method="post">
+            <div class="mb-3">
+                <label class="form-label">輸入你的 ngrok 網址（例如 https://xxxx.ngrok.io/index.php）</label>
+                <input type="text" name="url" class="form-control" placeholder="https://xxxx.ngrok.io/index.php" required>
+            </div>
+            <button type="submit" class="btn btn-success w-100">產生 QR Code</button>
+        </form>
 
-<?php if(empty($ips)): ?>
-    <p>未偵測到可用的區域網 IP</p>
-<?php else: ?>
-    <?php foreach($ips as $ip): 
-        $url = "http://$ip/index.php"; 
-        ob_start();
-        QRcode::png($url, null, QR_ECLEVEL_L, 6);
-        $qrData = base64_encode(ob_get_clean());
-    ?>
-    <div class="ip-card">
-        <h3>IP：<?= $ip ?></h3>
-        <p><a href="<?= $url ?>" target="_blank"><?= $url ?></a></p>
-        <img src="data:image/png;base64,<?= $qrData ?>" alt="QR Code for <?= $ip ?>">
+        <?php if (!empty($filename)): ?>
+            <div class="text-center mt-4">
+                <h5>📱 掃描以下 QR Code 進入網站：</h5>
+                <img src="<?php echo $filename; ?>" alt="QR Code" class="img-fluid mt-2" style="max-width:250px;">
+                <p class="mt-3"><a href="<?php echo htmlspecialchars($url); ?>" target="_blank"><?php echo htmlspecialchars($url); ?></a></p>
+            </div>
+        <?php endif; ?>
     </div>
-    <?php endforeach; ?>
-<?php endif; ?>
-
+</div>
 </body>
 </html>
