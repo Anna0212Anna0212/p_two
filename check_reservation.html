@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8" />
     <title>查詢我的訂位</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <style>
         body { font-family: "微軟正黑體"; padding: 2rem; background: #f0f0f0; }
         input { padding: 0.5rem; margin: 0.5rem 0; width: 300px; }
@@ -23,6 +25,7 @@
             <tr>
                 <th>姓名</th><th>電話</th><th>Email</th><th>日期</th><th>時間</th>
                 <th>人數</th><th>區域</th><th>備註</th><th>狀態</th><th>建立時間</th>
+                <th>操作</th>
             </tr>
         </thead>
         <tbody></tbody>
@@ -34,9 +37,14 @@
             if (!keyword) return alert("請輸入電話或 Email");
 
             const reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
-            const results = reservations.filter(r =>
-                r.phone.includes(keyword) || r.email.toLowerCase().includes(keyword.toLowerCase())
-            );
+
+            // 依關鍵字篩選
+            const results = reservations
+                .map((r, index) => ({ ...r, index })) 
+                .filter(r =>
+                    r.phone.includes(keyword) ||
+                    r.email.toLowerCase().includes(keyword.toLowerCase())
+                );
 
             const table = document.getElementById("resultTable");
             const tbody = table.querySelector("tbody");
@@ -50,15 +58,60 @@
 
             results.forEach(r => {
                 tbody.innerHTML += `
-                    <tr>
-                        <td>${r.name}</td><td>${r.phone}</td><td>${r.email}</td>
-                        <td>${r.date}</td><td>${r.time}</td><td>${r.people}</td>
-                        <td>${r.area}</td><td>${r.note}</td><td>${r.status}</td><td>${r.created_at}</td>
+                    <tr id="row-${r.index}">
+                        <td contenteditable>${r.name}</td>
+                        <td contenteditable>${r.phone}</td>
+                        <td contenteditable>${r.email}</td>
+                        <td contenteditable>${r.date}</td>
+                        <td contenteditable>${r.time}</td>
+                        <td contenteditable>${r.people}</td>
+                        <td contenteditable>${r.area}</td>
+                        <td contenteditable>${r.note}</td>
+                        <td>${r.status}</td>
+                        <td>${r.created_at}</td>
+                        <td>
+                            <button onclick="save(${r.index})">儲存</button>
+                            <button onclick="removeRes(${r.index})">刪除</button>
+                        </td>
                     </tr>`;
             });
 
             table.style.display = "table";
         });
+
+        // 儲存修改
+        function save(i) {
+            const reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
+            const row = document.getElementById(`row-${i}`).children;
+
+            reservations[i] = {
+                name: row[0].innerText.trim(),
+                phone: row[1].innerText.trim(),
+                email: row[2].innerText.trim(),
+                date: row[3].innerText.trim(),
+                time: row[4].innerText.trim(),
+                people: row[5].innerText.trim(),
+                area: row[6].innerText.trim(),
+                note: row[7].innerText.trim(),
+                status: row[8].innerText.trim(),
+                created_at: row[9].innerText.trim()
+            };
+
+            localStorage.setItem("reservations", JSON.stringify(reservations));
+            alert("已更新訂位資料！");
+        }
+
+        // 刪除
+        function removeRes(i) {
+            if (!confirm("確定要刪除這筆訂位嗎？")) return;
+
+            let reservations = JSON.parse(localStorage.getItem("reservations") || "[]");
+            reservations.splice(i, 1);
+
+            localStorage.setItem("reservations", JSON.stringify(reservations));
+            alert("已刪除！");
+            location.reload();
+        }
     </script>
 </body>
 </html>
